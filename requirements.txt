@@ -1,0 +1,15 @@
+# Étape 1 : ingestion
+requests>=2.31
+trafilatura>=1.12
+pdfplumber>=0.11
+
+# Outils dev
+pytest>=8.0
+ruff>=0.6
+
+# À ajouter au fil des étapes (ne pas installer maintenant)
+# Étape 3-4 : sentence-transformers, qdrant-client
+# Étape 5 : rank-bm25
+# Étape 6 : ollama
+# Étape 7 : mlflow
+# Étape 8 : fastapi, uvicorn

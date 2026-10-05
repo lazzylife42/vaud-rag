@@ -1,6 +1,10 @@
 # vaud-rag
 
-Proto RAG + MLflow sur les démarches chômage du canton de Vaud. Corpus officiel (vd.ch, ch.ch, Fedlex), citations, abstention, zéro log des questions. Projet tutoriel guidé, 2 semaines.
+[![wakatime](https://wakatime.com/badge/user/4e37586b-a92c-445c-9c61-d6eecf04f9b7/project/8b3fe044-112c-4271-95dc-bbf5f7799813.svg)](https://wakatime.com/badge/user/4e37586b-a92c-445c-9c61-d6eecf04f9b7/project/8b3fe044-112c-4271-95dc-bbf5f7799813)
+
+Proto RAG + MLflow sur les démarches chômage du canton de Vaud. ...
+
+> Navigation dans les documents officiels, pas un conseil juridique.
 
 ## Avancement
 

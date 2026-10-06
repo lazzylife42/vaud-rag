@@ -1,7 +1,15 @@
-import logging
 import sys
+import logging
+from operator import itemgetter
 from config.config import load_config, get_site_config
-from crawler.crawler import get_sitemap, filter_urls
+from crawler.crawler import (
+	get_sitemap,
+	group_by_branch,
+	filter_urls,
+	hit_ratio,
+	select_urls,
+)
+
 
 def main():
 	logging.basicConfig(level=logging.INFO)
@@ -12,16 +20,10 @@ def main():
 		logging.error(e)
 		sys.exit(1)
 
-	sitemap = get_sitemap(
-		url=site["base_url"]
-	)
+	sitemap = get_sitemap(url=site["base_url"])
 
-	matching = filter_urls(
-		sitemap=sitemap,
-		keywords=site["explore_keywords"]
-	)
-
-	print(matching)
+	selected = select_urls(sitemap, site["include_prefixes"], site["exclude_prefixes"])
+	print(selected)
 
 
 if __name__ == "__main__":

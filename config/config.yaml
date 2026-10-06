@@ -7,12 +7,23 @@ crawler:
       explore_keywords:
         - chomage
         - orp
+        - lorp
         - laci
         - indemnite
+        - indemnites
         - demandeur
-      include_prefixes: []
-      exclude_prefixes: []
-      languages:
-        - fr
+        - demandeurs
+        - demandeuse
+        - demandeuses
+        - demploi
+      explore_min_hits: 3
+      explore_min_ratio: 0.2
+      explore_depth: 3
+      include_prefixes:
+        - economie/prestations-destinees-aux-demandeuses-et-demandeurs-demploi/
+        - prestation/obtenir-une-indemnite-en-cas-dinsolvabilite/
+      exclude_prefixes:
+        - economie/prestations-destinees-aux-demandeuses-et-demandeurs-demploi/publications/
+      languages: [fr]
       min_text_chars: 200
       delay_seconds: 2

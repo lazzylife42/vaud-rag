@@ -13,12 +13,14 @@ REQUIRED = {
 	"explore_keywords": list,
 }
 
+
 def load_config(path=CONFIG_PATH):
 	try:
 		with open(path, "r", encoding="utf-8") as f:
 			return yaml.safe_load(f)
 	except FileNotFoundError as e:
 		raise ValueError(f"Config not found: {path}.") from e
+
 
 def validate_site(site):
 	name = site.get("name", "?")
@@ -35,11 +37,11 @@ def validate_site(site):
 			)
 	if site["delay_seconds"] < 1:
 		raise ValueError(
-			f"site '{name}': 'delay_seconds' must be >= 1, "
-			f"got {site['delay_seconds']}."
+			f"site '{name}': 'delay_seconds' must be >= 1, got {site['delay_seconds']}."
 		)
 
 	return site
+
 
 def get_site_config(conf, site_name):
 	if not isinstance(conf, dict):

@@ -1,6 +1,7 @@
 ### Crawler
 
 crawler:
+  user_agent: "vaud-rag/0.1"
   sites:
     - name: vd
       base_url: https://www.vd.ch/

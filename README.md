@@ -44,13 +44,20 @@ Non vérifié à ce stade : conditions d'utilisation d'arbeit.swiss, conditions 
 ## Structure
 
 ```
-config/         config.yaml (une entrée par site), config.py (chargement, validation)
-crawler/        crawler.py (sitemap, filtrage et sélection des URLs)
-tests/          tests pytest (test_crawler.py)
-conftest.py     fixtures partagées (urls)
-pyproject.toml  configuration ruff (tabs) et pytest
-.vscode/        réglages pytest/debug (local)
-main.py         point d'entrée
+├── README.md
+├── config
+│   ├── config.py
+│   └── config.yaml
+├── conftest.py
+├── crawler
+│   ├── crawler.py
+│   ├── robots.py
+│   └── sitemap.json
+├── main.py
+├── pyproject.toml
+├── requirements.txt
+└── tests
+    └── test_crawler.py
 ```
 
 ## Décisions

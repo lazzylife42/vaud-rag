@@ -44,4 +44,23 @@ def urls():
 		"https://www.vd.ch/etat-droit-finances/votations-et-elections/registre-cantonal-des-partis-politiques/union-democratique-du-centre-udc/udc-b",
 		"https://www.vd.ch/aides-financieres-et-soutien-social/aides-financieres-et-comment-les-demander/revenu-dinsertion-ri/bareme-des-loyers-pour-le-revenu-dinsertion-ri/bareme-a-loyer-pour-la-commune-de-begnins",
 		"https://www.vd.ch/aides-financieres-et-soutien-social/aides-financieres-et-comment-les-demander/revenu-dinsertion-ri/bareme-des-loyers-pour-le-revenu-dinsertion-ri/bareme-a-loyer-pour-la-commune-de-belmont-sur-lausanne",
+		"https://www.vd.ch/economie/prestations-destinees-aux-demandeuses-et-demandeurs-demploi/inscription-des-demandeurs-demploi-a-lorp",
+		"https://www.vd.ch/territoire-et-construction/amenagement-du-territoire/projet-pilote-metamorphouse",
+	]
+
+
+@pytest.fixture
+def keywords():
+	return [
+		"chomage",
+		"orp",
+		"lorp",
+		"laci",
+		"indemnite",
+		"indemnites",
+		"demandeur",
+		"demandeurs",
+		"demandeuse",
+		"demandeuses",
+		"demploi",
 	]

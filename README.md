@@ -12,8 +12,7 @@ Proto RAG + MLflow sur les démarches chômage du canton de Vaud, construit en m
 - [x] Sitemap vd.ch (cache JSON, dédoublonnage)
 - [x] Exploration des branches (`filter_urls` par segments, `group_by_branch`, `hit_ratio`)
 - [x] Sélection par préfixes (`select_urls`, include/exclude en config)
-- [x] Tests pytest : `group_by_branch`
-- [ ] Tests pytest : `split_segments`, `filter_urls`, `select_urls`, `hit_ratio`
+- [x] Tests pytest : `group_by_branch`, `split_segments`, `filter_urls`, `select_urls`, `hit_ratio`
 - [ ] robots.txt (Protego), téléchargement, extraction, filtres, staging
 - [ ] Eval set, chunking, embeddings, retrieval, génération, MLflow, API
 
@@ -45,12 +44,13 @@ Non vérifié à ce stade : conditions d'utilisation d'arbeit.swiss, conditions 
 ## Structure
 
 ```
-config/        config.yaml (une entrée par site), config.py (chargement, validation)
-crawler/       crawler.py (sitemap, filtrage et sélection des URLs)
-tests/         tests pytest (fixture partagée dans conftest.py)
-conftest.py    racine du repo pour pytest + fixtures partagées
-pyproject.toml configuration ruff (indentation en tabs)
-main.py        point d'entrée
+config/         config.yaml (une entrée par site), config.py (chargement, validation)
+crawler/        crawler.py (sitemap, filtrage et sélection des URLs)
+tests/          tests pytest (test_crawler.py)
+conftest.py     fixtures partagées (urls)
+pyproject.toml  configuration ruff (tabs) et pytest
+.vscode/        réglages pytest/debug (local)
+main.py         point d'entrée
 ```
 
 ## Décisions
@@ -60,6 +60,8 @@ main.py        point d'entrée
 - **Les fonctions lèvent, `main` décide** de quitter.
 - **Code et logs en anglais**, corpus et eval set en français.
 - **Indentation en tabs**, formatage via `ruff format`.
+- **Fonctions pures testées unitairement** (URLs en dur dans les tests, jamais le vrai sitemap : pas de dépendance au réseau).
+- **Classe `Crawler` repoussée** : introduite avec le téléchargement, quand il y aura un état de session à porter (Protego, User-Agent, délai).
 
 ## Observations sur vd.ch
 

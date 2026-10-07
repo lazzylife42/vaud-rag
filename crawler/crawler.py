@@ -38,20 +38,23 @@ def group_by_branch(urls: list[str], depth: int = 3) -> Counter:
 	return counter
 
 
-def hit_ratio(total: Counter, hits: Counter) -> list[tuple[str, int, int, float]]:
-	rows = []
-	for key in hits:
-		if total[key] == 0:
-			raise ValueError("total key can't be zero.")
-		rows.append((key, hits[key], total[key], hits[key] / total[key]))
-
-	rows.sort(key=lambda row: row[3], reverse=True)
-	return rows
-
-
 def split_segments(url: str) -> list[str]:
 	path = urlsplit(url.lower()).path
 	return [token for token in re.split(r"[-/]", path) if token]
+
+
+def filter_urls(sitemap: list[str], keywords: list[str]) -> list[str]:
+	urls_to_keep = []
+	kw_set = set(kw.lower() for kw in keywords)
+	if not kw_set or "" in kw_set:
+		raise ValueError("keywords can't be empty")
+	for url in sitemap:
+		tokens = split_segments(url)
+		if not kw_set.isdisjoint(tokens):
+			urls_to_keep.append(url)
+
+	logging.info(f"Found {len(urls_to_keep)} urls.")
+	return list(urls_to_keep)
 
 
 def select_urls(
@@ -73,15 +76,12 @@ def select_urls(
 	return urls_to_keep
 
 
-def filter_urls(sitemap: list[str], keywords: list[str]) -> list[str]:
-	urls_to_keep = []
-	kw_set = set(kw.lower() for kw in keywords)
-	if not kw_set or "" in kw_set:
-		raise ValueError("keywords can't be empty")
-	for url in sitemap:
-		tokens = split_segments(url)
-		if not kw_set.isdisjoint(tokens):
-			urls_to_keep.append(url)
+def hit_ratio(total: Counter, hits: Counter) -> list[tuple[str, int, int, float]]:
+	rows = []
+	for key in hits:
+		if total[key] == 0:
+			raise ValueError("total key can't be zero.")
+		rows.append((key, hits[key], total[key], hits[key] / total[key]))
 
-	logging.info(f"Found {len(urls_to_keep)} urls.")
-	return list(urls_to_keep)
+	rows.sort(key=lambda row: row[3], reverse=True)
+	return rows

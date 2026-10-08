@@ -1,26 +1,30 @@
-import re
 import json
 import logging
+import re
 from collections import Counter
 from urllib.parse import urlsplit
+
 from trafilatura import sitemaps
+
+logger = logging.getLogger(__name__)
 
 
 def get_sitemap(url: str) -> list[str]:
-	sitemap_path = "./crawler/sitemap.json"
+	host = urlsplit(url).hostname
+	sitemap_path = f"./crawler/sitemap_{host}.json"
 	try:
 		with open(sitemap_path, "r", encoding="utf-8") as f:
 			sitemap = json.load(f)
 
 	except FileNotFoundError:
-		logging.warning(
-			'File "sitemap.json" not found. Trying to parse it from BASE_URL.'
+		logger.warning(
+			f'File "sitemap_{host}.json" not found. Trying to parse it from {url}.'
 		)
 		sitemap = list(dict.fromkeys(sitemaps.sitemap_search(url=url)))
 		with open(sitemap_path, "w", encoding="utf-8") as f:
 			json.dump(sitemap, f, indent=4)
 
-	logging.info(f"Sitemap contains {len(sitemap)} urls.")
+	logger.info(f"Sitemap contains {len(sitemap)} urls.")
 	return sitemap
 
 
@@ -45,7 +49,7 @@ def split_segments(url: str) -> list[str]:
 
 def filter_urls(sitemap: list[str], keywords: list[str]) -> list[str]:
 	urls_to_keep = []
-	kw_set = set(kw.lower() for kw in keywords)
+	kw_set = {kw.lower() for kw in keywords}
 	if not kw_set or "" in kw_set:
 		raise ValueError("keywords can't be empty")
 	for url in sitemap:
@@ -53,7 +57,7 @@ def filter_urls(sitemap: list[str], keywords: list[str]) -> list[str]:
 		if not kw_set.isdisjoint(tokens):
 			urls_to_keep.append(url)
 
-	logging.info(f"Found {len(urls_to_keep)} urls.")
+	logger.info(f"Found {len(urls_to_keep)} urls.")
 	return list(urls_to_keep)
 
 
@@ -72,7 +76,7 @@ def select_urls(
 		if path.startswith(include_t) and not path.startswith(exclude_t):
 			urls_to_keep.append(url)
 
-	logging.info(f"{len(urls_to_keep)} url(s) was kept after filtering.")
+	logger.info(f"{len(urls_to_keep)} url(s) was kept after filtering.")
 	return urls_to_keep
 
 

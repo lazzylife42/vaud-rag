@@ -1,5 +1,6 @@
-import requests
 from urllib.parse import urljoin
+
+import requests
 from protego import Protego
 
 
@@ -8,7 +9,7 @@ def fetch_robots_text(base_url: str, user_agent: str) -> str:
 	headers["User-Agent"] = user_agent
 	url = urljoin(base_url, "robots.txt")
 	try:
-		r = requests.get(url=url, headers=headers, timeout=2)
+		r = requests.get(url=url, headers=headers, timeout=10)
 		r.raise_for_status()
 	except requests.exceptions.RequestException as e:
 		raise ValueError(f"Cannot fetch {url}: {e}") from e

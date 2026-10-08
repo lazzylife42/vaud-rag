@@ -1,7 +1,6 @@
 ### Crawler
 
 crawler:
-  user_agent: "vaud-rag/0.1"
   sites:
     - name: vd
       base_url: https://www.vd.ch/
@@ -25,6 +24,8 @@ crawler:
         - prestation/obtenir-une-indemnite-en-cas-dinsolvabilite/
       exclude_prefixes:
         - economie/prestations-destinees-aux-demandeuses-et-demandeurs-demploi/publications/
+        - economie/prestations-destinees-aux-demandeuses-et-demandeurs-demploi/videos-dinformation-sur-lassurance-chomage/
+        - economie/prestations-destinees-aux-demandeuses-et-demandeurs-demploi/videos-multilingues-sur-lindemnisation/
       languages: [fr]
       min_text_chars: 200
       delay_seconds: 2

@@ -11,7 +11,7 @@ from crawler.crawler import (
 )
 
 
-class Test__group_by_branch:
+class TestGroupByBranch:
 	def test_no_depth(self, urls):
 		with pytest.raises(ValueError, match="depth must be >= 1"):
 			group_by_branch(urls=urls, depth=0)
@@ -45,7 +45,7 @@ def test_split_segments(url, expected):
 	assert split_segments(url) == expected
 
 
-class Test__filter_urls:
+class TestFilterUrls:
 	def test_does_not_match_substring(self):
 		sitemap = [
 			"https://www.vd.ch/economie/inscription-des-demandeurs-demploi-a-lorp",
@@ -86,7 +86,7 @@ class Test__filter_urls:
 		assert filtered == []
 
 
-class Test__select_urls:
+class TestSelectUrls:
 	@pytest.mark.parametrize(
 		"include, exclude, message",
 		[
@@ -146,7 +146,7 @@ class Test__select_urls:
 		assert selected == []
 
 
-class Test__hit_ratio:
+class TestHitRatio:
 	def test_ratio(self):
 		rows = hit_ratio(
 			total=Counter({"a/": 10, "c/": 100}),

@@ -1,11 +1,13 @@
-import pytest
 from collections import Counter
+
+import pytest
+
 from crawler.crawler import (
+	filter_urls,
 	group_by_branch,
 	hit_ratio,
-	split_segments,
 	select_urls,
-	filter_urls,
+	split_segments,
 )
 
 

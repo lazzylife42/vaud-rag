@@ -1,5 +1,6 @@
-import yaml
 from pathlib import Path
+
+import yaml
 
 CONFIG_PATH = Path(__file__).resolve().parent / "config.yaml"
 
@@ -31,7 +32,7 @@ def validate_site(site):
 		if isinstance(value, bool) or not isinstance(value, expected):
 			names = expected if isinstance(expected, tuple) else (expected,)
 			expected_names = "|".join(t.__name__ for t in names)
-			raise ValueError(
+			raise TypeError(
 				f"site '{name}': '{key}' must be {expected_names}, "
 				f"got {type(value).__name__}"
 			)
@@ -45,19 +46,19 @@ def validate_site(site):
 
 def get_site_config(conf, site_name):
 	if not isinstance(conf, dict):
-		raise ValueError("Config is empty or not a mapping")
+		raise TypeError("Config is empty or not a mapping")
 
 	crawler = conf.get("crawler")
 	if not isinstance(crawler, dict):
-		raise ValueError("'crawler' is missing or not a mapping")
+		raise TypeError("'crawler' is missing or not a mapping")
 
 	sites = crawler.get("sites")
 	if not isinstance(sites, list):
-		raise ValueError("'crawler.sites' is missing or not a list")
+		raise TypeError("'crawler.sites' is missing or not a list")
 
 	for site in sites:
 		if not isinstance(site, dict) or "name" not in site:
-			raise ValueError("Each site must be a mapping with a 'name'")
+			raise TypeError("Each site must be a mapping with a 'name'")
 		if site["name"] == site_name:
 			return validate_site(site)
 

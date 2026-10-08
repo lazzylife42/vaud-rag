@@ -10,11 +10,11 @@ __pycache__/
 
 # Secrets / config locale
 .env
-.env.*
+.env*
 !.env.example
 
 # Crawler
-crawler/sitemap.json
+crawler/sitemap*.json
 
 # Données (voir note ci-dessous)
 data/raw/

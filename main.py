@@ -13,6 +13,7 @@ logger = logging.getLogger(__name__)
 
 
 def main():
+	"""Charge .env et config, récupère le sitemap et affiche les URLs sélectionnées."""
 	mail = os.environ.get("MAIL")
 	if not mail:
 		raise ValueError("MAIL not found in env.")

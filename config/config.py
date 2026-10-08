@@ -16,6 +16,7 @@ REQUIRED = {
 
 
 def load_config(path=CONFIG_PATH):
+	"""Charge le YAML de config, ValueError si le fichier est introuvable."""
 	try:
 		with open(path, "r", encoding="utf-8") as f:
 			return yaml.safe_load(f)
@@ -24,6 +25,7 @@ def load_config(path=CONFIG_PATH):
 
 
 def validate_site(site):
+	"""Vérifie clés, types et délai minimal d'un site (TypeError/ValueError), retourne le site."""
 	name = site.get("name", "?")
 	for key, expected in REQUIRED.items():
 		if key not in site:
@@ -45,6 +47,7 @@ def validate_site(site):
 
 
 def get_site_config(conf, site_name):
+	"""Retourne la config validée du site demandé, ValueError s'il est absent."""
 	if not isinstance(conf, dict):
 		raise TypeError("Config is empty or not a mapping")
 

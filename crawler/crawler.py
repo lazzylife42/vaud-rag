@@ -10,6 +10,7 @@ logger = logging.getLogger(__name__)
 
 
 def get_sitemap(url: str) -> list[str]:
+	"""Retourne les URLs dédoublonnées du sitemap du host, depuis le cache JSON ou en le parsant puis en le cachant."""
 	host = urlsplit(url).hostname
 	sitemap_path = f"./crawler/sitemap_{host}.json"
 	try:
@@ -29,6 +30,7 @@ def get_sitemap(url: str) -> list[str]:
 
 
 def group_by_branch(urls: list[str], depth: int = 3) -> Counter:
+	"""Compte les URLs par branche de chemin sur depth niveaux (ValueError si depth < 1)."""
 	if depth < 1:
 		raise ValueError("depth must be >= 1.")
 	counter = Counter()
@@ -43,11 +45,13 @@ def group_by_branch(urls: list[str], depth: int = 3) -> Counter:
 
 
 def split_segments(url: str) -> list[str]:
+	"""Découpe le chemin d'une URL en tokens minuscules (séparateurs / et -)."""
 	path = urlsplit(url.lower()).path
 	return [token for token in re.split(r"[-/]", path) if token]
 
 
 def filter_urls(sitemap: list[str], keywords: list[str]) -> list[str]:
+	"""Garde les URLs dont un token de chemin égale un mot-clé (ValueError si liste vide ou mot-clé vide)."""
 	urls_to_keep = []
 	kw_set = {kw.lower() for kw in keywords}
 	if not kw_set or "" in kw_set:
@@ -64,6 +68,7 @@ def filter_urls(sitemap: list[str], keywords: list[str]) -> list[str]:
 def select_urls(
 	sitemap: list[str], include: list[str], exclude: list[str]
 ) -> list[str]:
+	"""Garde les URLs dont le chemin commence par un préfixe inclus et aucun exclu (ValueError si préfixe vide)."""
 	urls_to_keep = []
 	include_t = tuple(include)
 	exclude_t = tuple(exclude)
@@ -81,6 +86,7 @@ def select_urls(
 
 
 def hit_ratio(total: Counter, hits: Counter) -> list[tuple[str, int, int, float]]:
+	"""Retourne (branche, hits, total, ratio) triés par ratio décroissant (ValueError si total à zéro)."""
 	rows = []
 	for key in hits:
 		if total[key] == 0:
